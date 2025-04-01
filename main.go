@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"flag"
-	"fmt"
 	"go/ast"
 	"go/parser"
 	"go/token"
@@ -213,12 +212,12 @@ func main() {
 	flag.Parse()
 	args := flag.Args()
 	if len(args) < 1 {
-		log.Fatal("正确命令为: curd gen <filename>")
+		log.Fatal("used: DButil curd <filename>")
 	}
 
 	filename := args[1]
 	if filepath.Ext(filename) != ".go" {
-		log.Fatal("请在文件所在目录使用该命令或输入正确文件名")
+		log.Fatalf("Please run this command in the file's directory or enter the correct filename.\nYou entered the filename: %s", filename)
 	}
 
 	fset := token.NewFileSet()
@@ -251,7 +250,7 @@ func main() {
 	})
 
 	if !found {
-		fmt.Println("没有找到 TableName() 函数")
+		log.Fatal("TableName() method not found.")
 		return
 	}
 
@@ -277,5 +276,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("成功为 %s 生成CRUD方法\n", modelName)
+	log.Printf("Successfully generated CRUD methods for %s.\n", modelName)
 }
