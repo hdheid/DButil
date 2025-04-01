@@ -146,7 +146,7 @@ type UpdatesMulti struct {
 
 // UpdateMultiData ...
 func (m *{{.ModelName}}) UpdateMultiData(tableName string, tx *gorm.DB, idName string, update []*UpdatesMulti) (int64, error) {
-	if update == nil || len(update) <= 0 {
+	if len(update) == 0 {
 		return 0, nil
 	}
 
